@@ -24,8 +24,8 @@ public class ProjectoPrograGrupo2 {
         Baile baile = new Baile();
 
         //Cine
-        int cantidadAsientos=0;
-        Cine cine1[] = new Cine[cantidadAsientos];
+        Cine cine1[] = new Cine[100];
+        int contadorSalas = 0;
 
         //Precargamos informacion de trabajador en lista
         Trabajador trabajador1[] = new Trabajador[30];
@@ -112,22 +112,57 @@ public class ProjectoPrograGrupo2 {
                                     baile.eliminarReserva();
                                     break;
 
-                                case 4:
-
-                                    //Entrada Clase Cine
-                                    //Cantidad de espacios para el cine
-                                    cantidadAsientos = Integer.parseInt(JOptionPane.showInputDialog("Cuantos asientos son?"));
-                                    if (cine1[cantidadAsientos].cantidadAsientos(cantidadAsientos) == -1) {
-                                        JOptionPane.showMessageDialog(null, "La cantidad de asientos no es valida");
-
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Los asientos serian: " + cine1.getAsientos());
-                                    }
+                                default:
+                                    JOptionPane.showMessageDialog(null, "Opcion no valida");
                                     break;
 
                             }
+
                             break;
 
+                    }
+                    break;
+                case 4:
+
+                    //Entrada Clase Cine
+                    //Cantidad de espacios para el cine
+                    int opcion6 = Integer.parseInt(JOptionPane.showInputDialog("1.Ver salas\n2.Modificar Salas\n3.Borrar Sala"));
+                    switch (opcion6) {
+
+                        case 1:
+                            String mensaje = "";
+                            if (contadorSalas == 0) {
+                                JOptionPane.showMessageDialog(null, "No hay salas que se puedan ver");
+
+                            } else {
+                                for (int i = 0; i < contadorSalas; i++) {
+                                    mensaje += cine1[i].getNomPelicula() + "\n" + cine1[i].mostrarSalas();
+                                }
+                                JOptionPane.showMessageDialog(start, mensaje);
+                            }
+                            break;
+                        case 2:
+                            int ciclo1 = Integer.parseInt(JOptionPane.showInputDialog("Cuantas salas va a crear"));
+
+                            for (int i = 0; i < ciclo1; i++) {
+                                int cantidadAsietnos = Integer.parseInt(JOptionPane.showInputDialog("Cuantos asientos va a tener la sala"));
+                                if (cantidadAsietnos > 31) {
+                                    JOptionPane.showMessageDialog(null, "No se pueden tener mas de 30 asientos se asigo la cantidad maxima automaticamente");
+                                    cantidadAsietnos = 30;
+                                }
+                                String nombrePelicula = JOptionPane.showInputDialog("Cual es el nombre de la pelicula");
+
+                                cine1[i] = new Cine(cantidadAsietnos, trabajador1, nombrePelicula);
+                                for (int j = 0; j < cantidadAsietnos; j++) {
+                                    cine1[i].llenarTrabajadores(trabajador1);
+                                    cine1[i].ocuparAsientos();
+
+                                }
+
+                                contadorSalas++;
+
+                            }
+                            break;
                     }
 
             }

@@ -1,46 +1,138 @@
 package projectoprogragrupo2;
 
+import javax.swing.JOptionPane;
+
 public class Cine {
 
+    //Cantidad de asientos (Trabajadores que vamos a usar)
+    private int cantAsientos;
+
+    //Esta relacionado punto anterior 
+    private Trabajador trabajadores[];
+
+    //Usamos para salas
+    private String salas[][] = {{"L", "L", "L", "L", "L", "L"}, {"L", "L", "L", "L", "L", "L"}, {"L", "L", "L", "L", "L", "L"}, {"L", "L", "L", "L", "L", "L"}, {"L", "L", "L", "L", "L", "L"}};
+    private String letras[] = {"A", "B", "C", "D", "E"};
+    private String numeros[] = {"1", "2", "3", "4", "5", "6"};
+
+    private String nomPelicula;
+
     public Cine() {
-        
-    }
-    
-    
-
-    private int asientos = 0;
-    private String nombrePelicula = "";
-
-    public int getAsientos() {
-        return asientos;
     }
 
-    public void setAsientos(int asientos) {
-        this.asientos = asientos;
+    public Cine(int cantAsientos, Trabajador[] trabajadores, String nomPelicula) {
+
+        this.cantAsientos = cantAsientos;
+        this.trabajadores = trabajadores;
+        this.nomPelicula = nomPelicula;
     }
 
-    public String getNombrePelicula() {
-        return nombrePelicula;
+    public String getNomPelicula() {
+        return nomPelicula;
     }
 
-    public void setNombrePelicula(String nombrePelicula) {
-        this.nombrePelicula = nombrePelicula;
+    public void setNomPelicula() {
+        String nombrePeli = JOptionPane.showInputDialog("Cual es el nombre de la pelicula");
+        this.nomPelicula = nombrePeli;
     }
 
-    //Metodo para asignar cantidad de asientos
-    //Retornamos -1 en caso de que sea un numero negativo o mayor a 30 que es el maximo
-    //Si es 1 el numero fue asignado y podemos usar el getAsietnos para ver la cantidad de asientos
-    public int cantidadAsientos(int cantidadAsientos) {
-        int validacion = 0;
-        if (cantidadAsientos < 0 || cantidadAsientos > 30) {
-            validacion = -1;
+    public int getCantAsientos() {
+        return cantAsientos;
+    }
 
-        } else {
-            this.asientos = cantidadAsientos;
-            validacion++;
+    public void setCantAsientos() {
+        //Bandera verificar
+        boolean bandera = true;
+        while (bandera) {
+            //Bandera verificar asientos
+            boolean bandera1 = true;
+            int cantidadAsientos = Integer.parseInt(JOptionPane.showInputDialog("Cual es la cantidad de asientos de la sala"));
+            if (cantidadAsientos > 31) {
+                JOptionPane.showMessageDialog(null, "No se permiten salas de mas de 30 asientos");
+                bandera1 = false;
+            }
+
+            if (bandera1) {
+                {
+                    JOptionPane.showMessageDialog(null, "La sala se creo exitosamente");
+                    this.cantAsientos = cantAsientos;
+                    bandera = false;
+                }
+
+            }
+        }
+    }
+
+    public String mostrarSalas() {
+        String mensaje = "";
+        for (int i = 0; i < 5; i++) {
+            mensaje += letras[i] + "   ";
+            for (int j = 0; j < 6; j++) {
+                mensaje += salas[i][j] + "  ";
+
+            }
+            mensaje += "\n";
+
+        }
+        mensaje += "   ";
+        for (int k = 0; k < 6; k++) {
+            mensaje += "  " + numeros[k] + "";
+
         }
 
-        return validacion;
+        return mensaje;
+    }
+
+    public void llenarTrabajadores(Trabajador trabajador[]) {
+        for (int i = 0; i < cantAsientos; i++) {
+            this.trabajadores[i].buscarTrabajador(trabajador);
+            
+        }
+
+    }
+
+    public void ocuparAsientos() {
+        JOptionPane.showMessageDialog(null, mostrarSalas());
+        boolean bandera = true;
+        while (bandera) {
+            mostrarSalas();
+            String fila = JOptionPane.showInputDialog("Cual es la fila que desea usar");
+            int columna = Integer.parseInt(JOptionPane.showInputDialog("Cual es el numero de columna que quiere usar")) - 1;
+            int seleccion = 0;
+            fila = fila.toUpperCase();
+            switch (fila) {
+                case "A":
+                    seleccion = 0;
+                    break;
+                case "B":
+                    seleccion = 1;
+                    break;
+                case "C":
+                    seleccion = 2;
+                    break;
+                case "D":
+                    seleccion = 3;
+                    break;
+                case "E":
+                    seleccion = 4;
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opcion no valida");
+                    break;
+            }
+
+            if (columna < 0 || columna >= 6) {
+                JOptionPane.showMessageDialog(null, "Columna no valida");
+            }
+
+            if (salas[seleccion][columna].equals("O")) {
+                JOptionPane.showMessageDialog(null, "El asiento esta ocupado");
+            } else {
+                salas[seleccion][columna] = "O";
+                JOptionPane.showMessageDialog(null, "Asiento guardado");
+                bandera = false;
+            }
+        }
     }
 
 }
