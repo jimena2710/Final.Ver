@@ -1,3 +1,3 @@
 Grupo 2
 Angelik Guatemala Camacho
-Mauricio 
+Mauricio Antonio Alvarez Diaz
