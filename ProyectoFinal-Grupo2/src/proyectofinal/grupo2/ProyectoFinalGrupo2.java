@@ -178,6 +178,55 @@ public class ProyectoFinalGrupo2 {
 
                             }
                             break;
+                             case 3:
+        // borrar las salas
+        if (contadorSalas == 0) {
+            JOptionPane.showMessageDialog(null, "No hay salas");
+        } else {
+            String cantidadSalas = "Salas disponibles:\n";
+            for (int i = 0; i < contadorSalas; i++) {
+                salasDisponibles += (i + 1) + ". Sala - Película: " + cine1[i].getNomPelicula() + "\n";
+            }
+            JOptionPane.showMessageDialog(null, cantidadSalas);
+            int borrarSala = Integer.parseInt(JOptionPane.showInputDialog("Digite el número de sala que desea borrar (1 a " + contadorSalas + "):")) - 1;
+            
+            if (borrarSala >= 0 && borrarSala < contadorSalas) {
+                for (int i = borrarSala; i < contadorSalas - 1; i++) {
+                    cine1[i] = cine1[i + 1]; // Desplazar las salas hacia atrás
+                }
+                
+                JOptionPane.showMessageDialog(null, "Se borró la sala de forma exitosa");
+            } else {
+                JOptionPane.showMessageDialog(null, "No es un número válido.");
+            }
+        }
+        break;
+case 4:
+        // Agregar trabajadores a la sala
+        if (contadorSalas == 0) {
+            JOptionPane.showMessageDialog(null, "No hay salas disponibles");
+        } else {
+            String cantidadSalas = "Salas disponibles:\n";
+            for (int i = 0; i < contadorSalas; i++) {
+                cantidadSalas += (i + 1) + ". Sala - Película: " + cine1[i].getNomPelicula() + "\n";
+            }
+            JOptionPane.showMessageDialog(null, cantidadSalas);
+            int salaSeleccionada = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de sala donde va a agregar un nuevo trabajador (1 a " + contadorSalas + "):")) - 1;
+            
+            if (salaSeleccionada >= 0 && salaSeleccionada < contadorSalas) {
+                String nombreTrabajador = JOptionPane.showInputDialog("Ingrese el nombre del trabajador:");
+                Trabajador nuevoTrabajador = new Trabajador(nombreTrabajador); // se crea un nuevo trabajador
+                cine1[salaSeleccionada].llenarTrabajadores(new Trabajador[] {nuevoTrabajador});
+                JOptionPane.showMessageDialog(null, "El trabajador fue agregado de froma exitosa");
+            } else {
+                JOptionPane.showMessageDialog(null, "Número inválido.");
+            }
+        }
+        break;
+
+    default:
+        JOptionPane.showMessageDialog(null, "Opción no válida.");
+        break;
                     }
 
             }
